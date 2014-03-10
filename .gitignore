@@ -1,0 +1,10 @@
+*.class
+*.orig
+*.pyc
+*.pyo
+*.rej
+.hg
+.project
+.pydevproject
+.settings
+config.py

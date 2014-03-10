@@ -1,0 +1,17 @@
+.post{
+    display: inline-block;
+    margin: 5px;
+    float: none;
+    padding: 5px;
+    background: #D8D5D2;
+    max-width: 300px;
+    word-wrap: break-word;
+}
+.posts{
+	
+}
+.image{
+	max-width: 280px;
+	float:left;
+	margin: 7px 7px 7px 0;
+}
