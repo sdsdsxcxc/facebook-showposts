@@ -1,6 +1,12 @@
 #!/usr/bin/env python
 # -*- coding: utf-8 -*-
 
+"""
+Sample Facebook data for the testing.
+Received by Facebook API call to /user/posts
+"""
+
+
 false = False
 true = True
 resp1 = {

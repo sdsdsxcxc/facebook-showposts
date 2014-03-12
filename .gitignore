@@ -8,3 +8,5 @@
 .pydevproject
 .settings
 config.py
+_*
+

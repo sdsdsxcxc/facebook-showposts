@@ -1,3 +1,7 @@
+"""
+Routes for tests
+"""
+
 from webapp2_extras.routes import RedirectRoute
 import handlers
 

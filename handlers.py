@@ -27,13 +27,16 @@ class BaseHandler(webapp2.RequestHandler):
     """
     @property
     def current_user(self):
+        """
+        :returns object: User object or None
+        """
         if not hasattr(self, "_current_user"):
             logging.info("not hasattr")
             self._current_user = None
             cookie = facebook.get_user_from_cookie(
                 self.request.cookies,
-                self.app.config.get("FACEBOOK_APP_ID"),
-                self.app.config.get("FACEBOOK_APP_SECRET"))
+                self.app.config.get("FACEBOOK_APP_ID", ""),
+                self.app.config.get("FACEBOOK_APP_SECRET", ""))
             logging.info(str(self.request.cookies))
             if cookie:
                 logging.info("if cookie")
@@ -61,11 +64,20 @@ class BaseHandler(webapp2.RequestHandler):
 
 
 class HomeHandler(BaseHandler):
+    """
+    Main Handler
+    """
     template = jinja_environment.get_template('templates/main.html')
     def get(self):
         self.show_main()
 
     def post(self):
+        """
+        
+        Save the Posts for the given User, and delete old Posts
+        
+        :param str channel: User name, which posts we will save
+        """
         channel = self.request.get('channel')
         graph = facebook.GraphAPI(self.current_user.access_token)
         profile = graph.get_object("me")
@@ -83,10 +95,13 @@ class HomeHandler(BaseHandler):
         self.show_main()
 
     def show_main(self):
+        """
+        Show the main page
+        """
         posts = Posts.get_posts(10)
         logging.info(self.current_user)
         args = dict(current_user=self.current_user,
-                    facebook_app_id=self.app.config.get("FACEBOOK_APP_ID"),
+                    facebook_app_id=self.app.config.get("FACEBOOK_APP_ID", ""),
                     posts=posts)
         logging.info(str(args))
         self.response.out.write(self.template.render(args))

@@ -8,6 +8,9 @@ from dateutil import tz
 
 
 class Posts(ndb.Model):
+    """
+    Model for storing the Facebook Posts
+    """
 #     id = ndb.StringProperty()
     from_ = ndb.PickleProperty()
     to = ndb.PickleProperty()
@@ -26,8 +29,12 @@ class Posts(ndb.Model):
     @classmethod
     def save(cls, data):
         """
-        Save an entity in DB
-        :return: nothing
+        
+        Save an entity in DB.
+        
+        :param dict data: Item from the 'data' section of the dictionary that was received from
+                          the Facebook API request /posts/
+        :return: Nothing
         """
         record = cls.get_or_insert(
             data["id"],
@@ -52,9 +59,12 @@ class Posts(ndb.Model):
     @classmethod
     def refresh_db(cls, data):
         """
-        Delete old posts
-        and save new posts
-        :return: nothing
+        
+        Delete old posts and save new posts.
+
+        :param dict data: 'data' section of the dictionary that was received from
+                          the Facebook API request /posts/
+        :returns: Nothing
         """
         db_keys = cls.query().fetch(keys_only=True)
         keys = [ndb.Key(cls, item["id"]) for item in data]
@@ -69,7 +79,11 @@ class Posts(ndb.Model):
     @classmethod
     def get_posts(cls, PageSize):
         """
-        :return posts in dict
+        
+        Get the Posts from the DB
+        
+        :param int page_size: Limit number of the posts returned by this call
+        :returns dict: Posts
         """
         qr = cls.query().order(cls.key)
         result = qr.map(lambda rec: rec.to_dict(), limit=PageSize)
@@ -77,11 +91,13 @@ class Posts(ndb.Model):
 
 
 class User(db.Model):
+    """
+    Model for storing the User Information
+    """
     id = db.StringProperty(required=True)
     created = db.DateTimeProperty(auto_now_add=True)
     updated = db.DateTimeProperty(auto_now=True)
     name = db.StringProperty(required=True)
     profile_url = db.StringProperty(required=True)
     access_token = db.StringProperty(required=True)
-
 

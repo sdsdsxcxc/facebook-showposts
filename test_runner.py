@@ -1,8 +1,16 @@
+"""
+
+Run unit tests for App Engine apps.
+
+"""
+
 #!/usr/bin/python
 import optparse
 import sys
 # Install the Python unittest2 package before you run this script.
 import unittest2
+
+import appengine_config
 
 USAGE = """%prog SDK_PATH TEST_PATH
 Run unit tests for App Engine apps.
@@ -12,6 +20,12 @@ TEST_PATH   Path to package containing test modules"""
 
 
 def main(sdk_path, test_path):
+    """
+
+    :param sdk_path:    Path to the SDK installation
+    :param test_path:   Path to package containing test modules
+
+    """
     sys.path.insert(0, sdk_path)
     import dev_appserver
     dev_appserver.fix_sys_path()
